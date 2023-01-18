@@ -4,6 +4,7 @@ public class BlackjackMaikel {
 	public static void main(String[] args) {
 		System.out.println("Welkom bij de blackjack van maikel");
 		System.out.println("De uitleg komt hier onder te staan:");
+		System.out.println("Dit moet je doen");
 	}
 }
 
