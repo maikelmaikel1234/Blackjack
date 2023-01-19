@@ -12,6 +12,9 @@ class BlackjackBlackJackGideon1 {
 		int dealerKaart1, dealerKaart2;
 		int volgendeKaart;
 		int playerTotaal = 0, dealerTotaal = 0;
+		
+		int wins = 0;
+		int losses = 0;
 	
 		Scanner invoer = new Scanner(System.in);
 		Random random = new Random();
@@ -31,6 +34,7 @@ class BlackjackBlackJackGideon1 {
 		// Dealer beide kaarten
 		dealerTotaal = dealerKaart1 + dealerKaart2;
 		System.out.println("De eerste kaart van de dealer is: " + dealerKaart1);
+		System.out.println("De tweede kaart is niet zichtbaar");
 		//System.out.println("De tweede kaart van de dealer is: " + dealerKaart2);
 		//System.out.println("Dealer totaal heeft: " + dealerTotaal);
 		
@@ -67,20 +71,23 @@ class BlackjackBlackJackGideon1 {
 						
 			System.out.println("Jij had: " + playerTotaal);
 						
-			while ("no".equals(nogEenKaart)) {
-				if (dealerTotaal < playerTotaal && playerTotaal < 21) {
+			if ("no".equals(nogEenKaart)) {
+				if (dealerTotaal < playerTotaal && playerTotaal < 21) 
 					System.out.println("Je hebt gewonnen!");
-					System.out.println("Play again? yes or no");
-					playAgain = invoer.nextLine();
-				
-					if (playAgain.equalsIgnoreCase("yes"))
-					playAgain = "yes";
-				
-					if (dealerTotaal > playerTotaal && dealerTotaal < 21)
-					System.out.println("Je hebt verloren!");
 					
-					playAgain = invoer.nextLine();
+				if (dealerTotaal > playerTotaal && dealerTotaal < 21)
+						System.out.println("Je hebt verloren!");
+						System.out.println("Play again? yes or no");
+						playAgain = invoer.nextLine();
 				
+					if (playAgain.equals("yes")) {
+					} else {
+						System.out.println("Spel is afgelopen");
+					
+					playAgain = "yes";
+					
+					
+			
 					
 				}
 			}
