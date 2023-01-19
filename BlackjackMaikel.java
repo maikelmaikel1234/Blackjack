@@ -1,12 +1,97 @@
 package Blackjack;
 
+import java.util.Random;
+import java.util.Scanner;
+
 public class BlackjackMaikel {
+	
+	static String[] kaartenSoort = {"Harten", "Ruiten", "Schoppen", "Klaver"};
+	static int kaartWaarde1;
+	static int kaartWaarde2;
+	static int kaartWaarde3;
+	static int kaartWaarde4;
+	static int kaartWaarde5;
+	
+	
+	
 	public static void main(String[] args) {
+		Random rand = new Random();
+		Scanner sc = new Scanner(System.in);
+		
 		System.out.println("Welkom bij de blackjack van maikel");
 		System.out.println("De uitleg komt hier onder te staan:");
-		System.out.println("Dit moet je doen");
+		System.out.println("Je zal 2 kaarten krijgen met een waarde die je kan optellen");
+		System.out.println("Ook de dealer zal 2 kaarten krijgen waarvan er maar 1 te zien is");
+		System.out.println("");
+		System.out.println("wil je beginnen: (yes) or (no)");
+		String antwoord = sc.nextLine();
+		
+		if (antwoord.equals("yes")){ 
+		
+		/*4 verschillende waardes voor elke kaart die wordt getrokken (2 voor speler 
+		 *en 2 voor Dealer. elke waarde een random waarde tussen de 1 en de 11y)
+		 */
+		kaartWaarde1 = rand.nextInt(11)+1;
+		kaartWaarde2 = rand.nextInt(11)+1;
+		kaartWaarde3 = rand.nextInt(11)+1;
+		kaartWaarde4 = rand.nextInt(11)+1;
+		kaartWaarde5 = rand.nextInt(11)+1;
+		
+		int TotaalSpeler = kaartWaarde1+kaartWaarde2;
+		int TotaalDealer = kaartWaarde3+kaartWaarde4;
+		
+		System.out.println("jij hebt kaart "+kaartWaarde1+" en "+kaartWaarde2);
+		System.out.println("dit is samen "+TotaalSpeler);
+		
+		System.out.println("");
+		
+		System.out.println("De dealer heeft "+kaartWaarde3+" en "+kaartWaarde4);
+		System.out.println("dit is samen "+TotaalDealer);
+		
+		System.out.println("wil je nog een kaart pakken (yes), (no)");
+		String doorSpelen = sc.nextLine();
+			
+			
+			if (doorSpelen.equals("yes")) {
+				System.out.println("De kaart die u heeft getrokken is: "+kaartWaarde5);
+				int TotaalSpeler1 = TotaalSpeler + kaartWaarde5;
+				System.out.println("Uw totaal is nu: " +TotaalSpeler1);
+				
+				System.out.println("totaal wordt nu opgeteld en vergeleken: ");
+				System.out.println("u heeft "+TotaalSpeler1+" punten");
+				System.out.println("de dealer heeft "+TotaalDealer+" punten");
+				if (TotaalSpeler1 >21) {
+					System.out.println("te veel u heeft verloren");
+				} else if (TotaalSpeler1 >TotaalDealer){
+					System.out.println("lekker gewerkt, je hebt gewonnen");
+				} else if (TotaalSpeler1 == TotaalDealer) {
+					System.out.println("het is gelijkspel");
+				} else {
+					System.out.println("helaas de dealer heeft gewonnen");
+				}
+	
+			} else { 
+				System.out.println("totaal wordt nu opgeteld en vergeleken: ");
+				System.out.println("u heeft "+TotaalSpeler+" punten");
+				System.out.println("de dealer heeft "+TotaalDealer+" punten");
+				if (TotaalSpeler >21) {
+					System.out.println("te veel u heeft verloren");
+				} else if (TotaalSpeler >TotaalDealer){
+					System.out.println("lekker gewerkt, je hebt gewonnen");
+				} else if (TotaalSpeler == TotaalDealer) {
+					System.out.println("het is gelijkspel");
+				} else {
+					System.out.println("helaas de dealer heeft gewonnen");
+				}
+			}
+		
+		
+		} else {
+			System.out.println("oke doei");
+		}
 	}
-}
+	
+	}
 
 /* BlackJack, ook wel 21-en genoemd.
 
