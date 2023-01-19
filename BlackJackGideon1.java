@@ -7,13 +7,17 @@ class BlackjackBlackJackGideon1 {
 	
 	System.out.println("Welkom bij Black Jack '21'");
 	
-		String nogEenKaart, playAgain = "y";
+		String nogEenKaart, playAgain = "yes", ctn = null;
 		int playerKaart1, playerKaart2;
 		int dealerKaart1, dealerKaart2;
+		int volgendeKaart;
 		int playerTotaal = 0, dealerTotaal = 0;
 	
 		Scanner invoer = new Scanner(System.in);
 		Random random = new Random();
+		
+		
+		while ("yes".equals(playAgain)) {
 		
 		// Dealer random kaarten
 		dealerKaart1 = random.nextInt(10) + 1;
@@ -36,10 +40,53 @@ class BlackjackBlackJackGideon1 {
 		
 		// Player beide kaarten
 		System.out.println("De eerste kaarten van jouw zijn: " + playerKaart1 + ", " + playerKaart2);
-		System.out.println("Jij hebt totaal: " + playerTotaal);
+		System.out.println("Je kaarten totaal zijn: " + playerTotaal);
 		
+		System.out.println("Wil je nog een kaart? yes or no ");
+		nogEenKaart = invoer.nextLine();
+		
+		while ("yes".equals(nogEenKaart)) {
+			volgendeKaart = random.nextInt(10) + 1;
+			playerTotaal += volgendeKaart;
+			System.out.println("Kaart: " + volgendeKaart);
+			System.out.println("Totaal: " + playerTotaal);
+			
+			if (playerTotaal > 21) {
+				System.out.println("Je hebt teveel punten, Dealer wins");
+				System.out.println("Wil je nog een keer spelen yes or no?");
+				playAgain = invoer.nextLine();
+			} 
+			
+			if (playerTotaal < 21)
+				System.out.println("Wil je nog een kaart? yes of no: ");
+				
+			nogEenKaart = invoer.nextLine();
+					
+			if ("no".equals(nogEenKaart))
+						System.out.println("Dealer had: " + dealerTotaal);
+						
+			System.out.println("Jij had: " + playerTotaal);
+						
+			while ("no".equals(nogEenKaart)) {
+				if (dealerTotaal < playerTotaal && playerTotaal < 21) {
+					System.out.println("Je hebt gewonnen!");
+					System.out.println("Play again? yes or no");
+					playAgain = invoer.nextLine();
+				
+					if (playAgain.equalsIgnoreCase("yes"))
+					playAgain = "yes";
+				
+					if (dealerTotaal > playerTotaal && dealerTotaal < 21)
+					System.out.println("Je hebt verloren!");
+					
+					playAgain = invoer.nextLine();
+				
+					
+				}
+			}
+		}
+		}
 	}
-	
 }
 
 
