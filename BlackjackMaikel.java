@@ -11,23 +11,24 @@ public class BlackjackMaikel {
 	static int kaartWaarde3;
 	static int kaartWaarde4;
 	static int kaartWaarde5;
+	static int spelerdoekoe = 100;
 	
 	
 	
 	public static void main(String[] args) {
 		Random rand = new Random();
 		Scanner sc = new Scanner(System.in);
+		Blackjack b = new Blackjack();
 		
-		System.out.println("Welkom bij de blackjack van maikel");
-		System.out.println("De uitleg komt hier onder te staan:");
-		System.out.println("Je zal 2 kaarten krijgen met een waarde die je kan optellen");
-		System.out.println("Ook de dealer zal 2 kaarten krijgen waarvan er maar 1 te zien is");
-		System.out.println("");
-		System.out.println("wil je beginnen: (yes) or (no)");
+		
+		b.intro();
 		String antwoord = sc.nextLine();
 		
 		if (antwoord.equals("yes")){ 
-		
+		System.out.println("u heeft "+spelerdoekoe+" euro");
+		System.out.println("hoeveel wilt u inzetten?");
+		int gok = sc.nextInt();
+		spelerdoekoe = spelerdoekoe - gok;
 		/*4 verschillende waardes voor elke kaart die wordt getrokken (2 voor speler 
 		 *en 2 voor Dealer. elke waarde een random waarde tussen de 1 en de 11y)
 		 */
@@ -49,7 +50,7 @@ public class BlackjackMaikel {
 		System.out.println("dit is samen "+TotaalDealer);
 		
 		System.out.println("wil je nog een kaart pakken (yes), (no)");
-		String doorSpelen = sc.nextLine();
+		String doorSpelen = sc.next();
 			
 			
 			if (doorSpelen.equals("yes")) {
@@ -62,12 +63,19 @@ public class BlackjackMaikel {
 				System.out.println("de dealer heeft "+TotaalDealer+" punten");
 				if (TotaalSpeler1 >21) {
 					System.out.println("te veel u heeft verloren");
+					spelerdoekoe = spelerdoekoe - gok;
+					System.out.println("u heeft nu "+spelerdoekoe+" euro");
 				} else if (TotaalSpeler1 >TotaalDealer){
 					System.out.println("lekker gewerkt, je hebt gewonnen");
+					spelerdoekoe = spelerdoekoe + gok;
+					System.out.println("u heeft nu "+spelerdoekoe+" euro");
 				} else if (TotaalSpeler1 == TotaalDealer) {
 					System.out.println("het is gelijkspel");
+					System.out.println("u heeft nu "+spelerdoekoe+" euro");
 				} else {
 					System.out.println("helaas de dealer heeft gewonnen");
+					spelerdoekoe = spelerdoekoe - gok;
+					System.out.println("u heeft nu "+spelerdoekoe+" euro");
 				}
 	
 			} else { 
@@ -76,18 +84,27 @@ public class BlackjackMaikel {
 				System.out.println("de dealer heeft "+TotaalDealer+" punten");
 				if (TotaalSpeler >21) {
 					System.out.println("te veel u heeft verloren");
+					spelerdoekoe = spelerdoekoe - gok;
+					System.out.println("u heeft nu "+spelerdoekoe+" euro");
 				} else if (TotaalSpeler >TotaalDealer){
 					System.out.println("lekker gewerkt, je hebt gewonnen");
+					spelerdoekoe = spelerdoekoe + gok;
+					System.out.println("u heeft nu "+spelerdoekoe+" euro");
 				} else if (TotaalSpeler == TotaalDealer) {
 					System.out.println("het is gelijkspel");
+					System.out.println("u heeft nu "+spelerdoekoe+" euro");
 				} else {
 					System.out.println("helaas de dealer heeft gewonnen");
+					spelerdoekoe = spelerdoekoe - gok;
+					System.out.println("u heeft nu "+spelerdoekoe+" euro");
 				}
 			}
-		
+		System.out.println("wilt u nog een keer spelen (yes), (no)");
+		String nogeens = sc.next();
 		
 		} else {
 			System.out.println("oke doei");
+			
 		}
 	}
 	
