@@ -1,99 +1,75 @@
 package Blackjack;
 import java.util.Scanner;
 import java.util.*;
+import java.util.ArrayList;
 
 class BlackjackBlackJackGideon1 {
 	public static void main(String[] args) {
-	
-	System.out.println("Welkom bij Black Jack '21'");
-	
-		String nogEenKaart, playAgain = "yes", ctn = null;
-		int playerKaart1, playerKaart2;
-		int dealerKaart1, dealerKaart2;
-		int volgendeKaart;
-		int playerTotaal = 0, dealerTotaal = 0;
-		
-		int wins = 0;
-		int losses = 0;
-	
-		Scanner invoer = new Scanner(System.in);
-		Random random = new Random();
-		
-		
-		while ("yes".equals(playAgain)) {
-		
-		// Dealer random kaarten
-		dealerKaart1 = random.nextInt(10) + 1;
-		dealerKaart2 = random.nextInt(10) + 1;
-		
-		// Player random kaarten en totaal kaarten
-		playerKaart1 = random.nextInt(10) + 1;
-		playerKaart2 = random.nextInt(10) + 1;
-		playerTotaal = playerKaart1 + playerKaart2;
-		
-		// Dealer beide kaarten
-		dealerTotaal = dealerKaart1 + dealerKaart2;
-		System.out.println("De eerste kaart van de dealer is: " + dealerKaart1);
-		System.out.println("De tweede kaart is niet zichtbaar");
-		//System.out.println("De tweede kaart van de dealer is: " + dealerKaart2);
-		//System.out.println("Dealer totaal heeft: " + dealerTotaal);
-		
-		//
-		System.out.println("");
-		//
-		
-		// Player beide kaarten
-		System.out.println("De eerste kaarten van jouw zijn: " + playerKaart1 + ", " + playerKaart2);
-		System.out.println("Je kaarten totaal zijn: " + playerTotaal);
-		
-		System.out.println("Wil je nog een kaart? yes or no ");
-		nogEenKaart = invoer.nextLine();
-		
-		while ("yes".equals(nogEenKaart)) {
-			volgendeKaart = random.nextInt(10) + 1;
-			playerTotaal += volgendeKaart;
-			System.out.println("Kaart: " + volgendeKaart);
-			System.out.println("Totaal: " + playerTotaal);
-			
-			if (playerTotaal > 21) {
-				System.out.println("Je hebt teveel punten, Dealer wins");
-				System.out.println("Wil je nog een keer spelen yes or no?");
-				playAgain = invoer.nextLine();
-			} 
-			
-			if (playerTotaal < 21)
-				System.out.println("Wil je nog een kaart? yes of no: ");
-				
-			nogEenKaart = invoer.nextLine();
-					
-			if ("no".equals(nogEenKaart))
-						System.out.println("Dealer had: " + dealerTotaal);
-						
-			System.out.println("Jij had: " + playerTotaal);
-						
-			if ("no".equals(nogEenKaart)) {
-				if (dealerTotaal < playerTotaal && playerTotaal < 21) 
-					System.out.println("Je hebt gewonnen!");
-					
-				if (dealerTotaal > playerTotaal && dealerTotaal < 21)
-						System.out.println("Je hebt verloren!");
-						System.out.println("Play again? yes or no");
-						playAgain = invoer.nextLine();
-				
-					if (playAgain.equals("yes")) {
-					} else {
-						System.out.println("Spel is afgelopen");
-					
-					playAgain = "yes";
-					
-					
-			
-					
-				}
-			}
-		}
+		    Game game = new Game();
+		    int playerWins = 0;
+		    int dealerWins = 0;
+
+		    System.out.println("Welcome to Blackjack '21'");
+		    
+		    for (int i = 1; i <= 5; i++) {
+		        System.out.println("Round " + i);
+		        ArrayList<Integer> playerHand = new ArrayList<Integer>();
+		        ArrayList<Integer> dealerHand = new ArrayList<Integer>();
+
+		        // Kaarten delen
+		        playerHand.add(game.dealKaart());
+		        dealerHand.add(game.dealKaart());
+		        playerHand.add(game.dealKaart());
+		        dealerHand.add(game.dealKaart());
+
+		        // Kijken of iemand 21 heeft
+		        if (game.instandBlackjack(playerHand)) {
+		            System.out.println("Player wins with a blackjack!");
+		            playerWins++;
+		        } else if (game.instandBlackjack(dealerHand)) {
+		            System.out.println("Dealer wins with a blackjack");
+		            dealerWins++;
+		        } else {
+		            // Player's beurt
+		            while (game.getHandWaarde(playerHand) < 21) {
+		                System.out.println("Player's hand: " + playerHand + " (Total = " + game.getHandWaarde(playerHand) + ")");
+		                System.out.println("Do you want to draw a card? yes or no");
+		                Scanner sc = new Scanner(System.in);
+		                String choice = sc.nextLine();
+		                if (choice.equals("yes")) {
+		                    playerHand.add(game.dealKaart());
+		                } else {
+		                    break;
+		                }
+		            }
+
+		            // Dealer's beurt
+		            while (game.getHandWaarde(dealerHand) < 17) {
+		                dealerHand.add(game.dealKaart());
+		            }
+
+		            // Winner bepalen
+		            System.out.println("Player's hand: " + playerHand + " (Total = " + game.getHandWaarde(playerHand) + ")");
+		            System.out.println("Dealer's hand: " + dealerHand + " (Total = " + game.getHandWaarde(dealerHand) + ")");
+		            String winner = game.determineWinner(playerHand, dealerHand);
+		            System.out.println(winner);
+		            if (winner.equals("Player wins")) {
+		                playerWins++;
+		            } else if (winner.equals("Dealer wins")) {
+		                dealerWins++;
+		            }
+		            	System.out.println("");
+		        }
+		    }
+
+		    System.out.println("Player wins: " + playerWins + " Dealer wins: " + dealerWins);
+		    if (playerWins > dealerWins) {
+		        System.out.println("Player wins best out of 5");
+		    } else {
+		        System.out.println("Dealer wins the best out of 5");
+		    }
+		    	System.out.println("");
 		}
 	}
-}
 
-
+	
