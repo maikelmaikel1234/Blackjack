@@ -1,81 +1,150 @@
 package Blackjack.Glenn;
+
 import java.util.*;
 
 public class Blackjack {
+	static Deck deck = new Deck();
 	static Scanner input = new Scanner(System.in);
-	//ArrayList spelers = new ArrayList();
+	static ArrayList<Speler> spelers = new ArrayList<Speler>();
 	static boolean doorgaanSpel = true;
+	private static int aantalPasses = 0;
+	private static int aantalSpelers;
+	static Speler dealer = new Speler("Dealer");
+	private static int timerDuratie;
 	
-	public static void main(String[] args) {
-
-		Deck d1 = new Deck();
-		d1.schudDeck();
-		d1.printDeck();
-		
-		System.out.println();
-		System.out.println(d1.trekKaart());
-		d1.printDeck();
-		System.out.println();
-		System.out.println(d1.trekKaart());
-		
-		System.out.println("Welkom bij Blackjack!");
-		Speler player1 = new Speler();
-		
+	public static void main(String[] args) {		
+		System.out.println("\nWelkom bij Blackjack!");
+		vraagTimerTijd();
+		vraagAantalSpelers();
+		maakAantalSpelers(aantalSpelers);
+		if(aantalSpelers > 1) { //Print alle spelers uit als er meer dan 1 speler is
+			printSpelers();
+		}
+		for (Speler p : spelers) { //Geeft elke speler in ArrayList spelers 2 kaarten
+			System.out.println("\nDealer geeft " + p.krijgNaam() + " de volgende 2 kaarten:");
+			p.eerste2Kaarten();
+			System.out.println(p.getrokkenKaarten.get(0).kaart + " & " + p.getrokkenKaarten.get(1).kaart);
+		}
+		dealer.eersteKaartDealer(); //Geeft de dealer een eerste kaart
 		
 		//De main game loop, stopt wanneer in de beurt van de speler hij q invoert.
 		while(doorgaanSpel) {
-			player1.beurtSpeler(d1);
+			for (Speler p : spelers) { //Geeft elke speler in de ArrayList spelers een beurt mits deze minder dan 21 punten heeft.
+				if(p.haalTotaal() < 21) p.beurtSpeler();
+			}
+			if(aantalSpelers == aantalPasses) { //Doet de beurt van de Dealer nadat alle spelers hebben gepassed.
+				dealer.beurtDealer();
+				checkScore(); //Vergelijkt de scores van de spelers met de dealer en vertelt ze of ze hebben gewonnen
+				beeindigSpel();
+			}
 		}
 
 	}
+	
+	static void spelerPass() {
+		aantalPasses++;
+//		System.out.println("Aantal passes: " + aantalPasses);
+	}
 
-}
-
-class Speler {
-	 static Scanner input = new Scanner(System.in);
-	 private String naam;
-	 int totaalVanKaarten;
-	 
-	 Speler() {
-		 this.geefNaam();
-	 }
-	 
-	 void geefNaam(){
-		 //Vraagt speler om naam en slaat deze op 
-		 System.out.println("\nWat is je naam?");
-		 this.naam = input.next();
-	 }
-	 void geefNaam(String naam) {
-		 this.naam = naam;
-	 }
-	 
-	 String krijgNaam() {
-		 //Haalt naam van de speler op
-		 return this.naam;
-	 }
-	 
-	void beurtSpeler(Deck spelerDeck) {
-		//Geeft speler 3 keuzes, kaart trekken, passen of spel afsluiten.
-		boolean eindeBeurt = false;
-		System.out.println("\nk = kaart trekken\nq = spel afsluiten\np = passen");
+	static void vraagAantalSpelers() {
 		do {
-			System.out.println("\nWat wil je doen?");
+			System.out.println("Hoeveel spelers zijn er?");
+			try {
+				aantalSpelers = input.nextInt();
+			} catch(InputMismatchException IME) {
+				System.out.println("\nDaar ging iets mis, voer een getal in a.u.b.");
+				input.nextLine();
+			}
+			if(aantalSpelers < 1) {
+				System.out.println("\nVoer een getal boven de 0 in.");
+			}
+		} while(aantalSpelers <= 0);
+	}
+	
+	static void maakAantalSpelers(int aantal) {
+		for (int a = 0; a < aantal; a++) { //Maakt zoveel spelers als is opgegeven.
+			System.out.println("\nSpeler " + (a+1));
+			Speler player = new Speler();
+			spelers.add(player);
+		}
+	}
+	
+	static void printSpelers() {
+		System.out.println("\nDit zijn alle spelers:");
+		for (int p = 0; p < spelers.size(); p++) {
+			Speler x = spelers.get(p);
+			System.out.println(x.krijgNaam());
+		}
+	}
+	
+	static void vraagTimerTijd() {
+		boolean loop = true;
+		System.out.println("Spelers moeten in hun beurt binnen de tijd antwoord geven.");
+		System.out.println("Binnen hoeveel seconde moeten ze antwoord geven voordat ze af zijn?");
+		while(loop) {
+			try {
+				timerDuratie = input.nextInt();
+				loop = false;
+			} catch(InputMismatchException IME) {
+				System.out.println("\nDaar ging iets mis, voer een getal in a.u.b.");
+				input.nextLine();
+			}
+			System.out.println("\nSpelers hebben " + timerDuratie + " seconde de tijd om te antwoorden, klopt dit? (ja/nee)");
 			String antwoord = input.next();
 			switch(antwoord) {
-			case "k":
-				System.out.println(spelerDeck.trekKaart());
+			case "j":
+			case "ja":
+				System.out.println();
 				break;
-			case "q":
-				Blackjack.doorgaanSpel = false;
-				eindeBeurt = true;
-				break;
-			case "p":
-				System.out.println("\nJe passed.");
-				eindeBeurt = true;
+			case "n":
+			case "nee":
+				System.out.println("\nHoeveel seconde dan?");
+				loop = true;
 				break;
 			default:
-				System.out.println("Ongeldige keuze.");
+				System.out.println("\nOngeldige invoer");
+				loop = true;
 			}
-		} while(!eindeBeurt);
+		}
 	}
- }
+	
+	static int haalTimerTijd() {
+		return timerDuratie;
+	}
+	
+	static void checkScore() {
+		for (Speler p : spelers) { //Loop die elke speler af gaat.
+			System.out.println();
+			if (p.haalTotaal() > 21) { 
+				//Voert dit uit als speler meer dan 21 punten heeft.
+				System.out.println("Helaas " + p.krijgNaam() + ", je hebt helaas verloren omdat hebt meer dan 21 punten hebt.");
+				System.out.println("Je had " + p.haalTotaal() + " punten.");
+			} else if (dealer.haalTotaal() > 21) {
+				//Voert dit uit als dealer meer dan 21 punten heeft.
+				System.out.println("Gefeliciteerd " + p.krijgNaam() + "!\nJe hebt gewonnen omdat de dealer meer heeft dan 21 punten.");
+				System.out.println("Je had " + p.haalTotaal() + " punten.");
+			} else if (p.haalTotaal() < dealer.haalTotaal()) {
+				//Voert dit uit als speler minder heeft dan dealer.
+				System.out.println("Helaas " + p.krijgNaam() + ", je hebt verloren van de dealer.");
+				System.out.println("Je had " + p.haalTotaal() + " punten.");
+			} else if (p.haalTotaal() > dealer.haalTotaal() && p.haalTotaal() < 21) {
+				//Voert dit uit als speler meer heeft dan dealer.
+				System.out.println("Gefeliciteerd " + p.krijgNaam() + ", je hebt gewonnen van de dealer.");
+				System.out.println("Je had " + p.haalTotaal() + " punten.");
+			} else if (p.haalTotaal() == dealer.haalTotaal()) {
+				//Voert dit uit als de scores gelijk zijn.
+				System.out.println(p.krijgNaam() + ", je hebt evenveel punten als de dealer.");
+				System.out.println("Jullie hadden " + p.haalTotaal() + " punten.");
+			} else if (p.heeftBlackjack) {
+				//Voert dit uit als de speler Blackjack heeft en de dealer niet.
+				System.out.println("Gefeliciteerd " + p.krijgNaam() + ", je hebt gewonnen met een Blackjack.");
+			} 
+		}
+	}
+	
+	static void beeindigSpel() {
+		System.out.println("\nWas leuk met je te spelen!");
+		System.out.println("\n----EINDE PROGRAMMA----");
+		System.exit(0);
+	}
+}
