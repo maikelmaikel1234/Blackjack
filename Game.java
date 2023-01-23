@@ -6,7 +6,19 @@ class Game {
 
 	private ArrayList<Integer> deck;
 
-    public Game() {
+   
+	public void Intro() {
+		System.out.println("Welcome to Blackjack '21'");
+		System.out.println("");
+		System.out.println("De regels:");
+		System.out.println("De dealer krijgt 2 kaarten waarvan je 1 waardes ziet");
+		System.out.println("De player krijgt 2 kaarten waarvan je waardes wel ziet");
+		System.out.println("Er worden 5 rondes gespeeld de gene die de meeste uit 5 wint heeft gewonnen");
+		System.out.println("");
+	}
+	
+	
+	public Game() {
         // deck creeren van kaarten
         deck = new ArrayList<Integer>(); 			// Hier wordt een array list gemaakt met intergers om een deck te creeren
         for (int i = 1; i <= 11; i++) {				// een loop wordt hier gemaakt om kaarten tot bepaalde getal te maken

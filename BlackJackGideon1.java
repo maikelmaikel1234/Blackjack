@@ -9,7 +9,7 @@ class BlackjackBlackJackGideon1 {
 		    int playerWins = 0;
 		    int dealerWins = 0;
 
-		    System.out.println("Welcome to Blackjack '21'");
+		   game.Intro();
 		    
 		    for (int i = 1; i <= 5; i++) {		// hier wordt een loop gemaakt met rondes
 		        System.out.println("Round " + i);
@@ -32,6 +32,8 @@ class BlackjackBlackJackGideon1 {
 		        } else {
 		            // Player's beurt
 		            while (game.getHandWaarde(playerHand) < 21) {
+		            	System.out.println("Dealer's hand: " + dealerHand.get(0) + " and [hidden card]");
+		            	System.out.println("");
 		                System.out.println("Player's hand: " + playerHand + " (Total = " + game.getHandWaarde(playerHand) + ")");
 		                System.out.println("Do you want to draw a card? yes or no");
 		                Scanner sc = new Scanner(System.in);
@@ -42,7 +44,7 @@ class BlackjackBlackJackGideon1 {
 		                    break;
 		                }
 		            }
-
+		            
 		            // Dealer's beurt
 		            while (game.getHandWaarde(dealerHand) < 17) {   // wannneer de waardes onder 17 blijft krijgt dealer een extra kaart
 		                dealerHand.add(game.dealKaart());
