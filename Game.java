@@ -21,7 +21,7 @@ class Game {
 	public Game() {
         // deck creeren van kaarten
         deck = new ArrayList<Integer>(); 			// Hier wordt een array list gemaakt met intergers om een deck te creeren
-        for (int i = 1; i <= 11; i++) {				// een loop wordt hier gemaakt om kaarten tot bepaalde getal te maken
+        for (int i = 1; i <= 13; i++) {				// een loop wordt hier gemaakt om kaarten tot bepaalde getal te maken
             for (int j = 0; j < 4; j++) {
                 deck.add(i);
             }
