@@ -5,15 +5,15 @@ import java.util.ArrayList;
 
 class BlackjackBlackJackGideon1 {
 	public static void main(String[] args) {
-		    Game game = new Game();
+		    Game game = new Game();				// hier wordt een new instance gemaakt van het object class Game
 		    int playerWins = 0;
 		    int dealerWins = 0;
 
 		    System.out.println("Welcome to Blackjack '21'");
 		    
-		    for (int i = 1; i <= 5; i++) {
+		    for (int i = 1; i <= 5; i++) {		// hier wordt een loop gemaakt met rondes
 		        System.out.println("Round " + i);
-		        ArrayList<Integer> playerHand = new ArrayList<Integer>();
+		        ArrayList<Integer> playerHand = new ArrayList<Integer>(); // hier worden twee nieuwe arrayList gemaakt voor player en dealer 
 		        ArrayList<Integer> dealerHand = new ArrayList<Integer>();
 
 		        // Kaarten delen
@@ -35,8 +35,8 @@ class BlackjackBlackJackGideon1 {
 		                System.out.println("Player's hand: " + playerHand + " (Total = " + game.getHandWaarde(playerHand) + ")");
 		                System.out.println("Do you want to draw a card? yes or no");
 		                Scanner sc = new Scanner(System.in);
-		                String choice = sc.nextLine();
-		                if (choice.equals("yes")) {
+		                String keuze = sc.nextLine();
+		                if (keuze.equals("yes")) {
 		                    playerHand.add(game.dealKaart());
 		                } else {
 		                    break;
@@ -44,7 +44,7 @@ class BlackjackBlackJackGideon1 {
 		            }
 
 		            // Dealer's beurt
-		            while (game.getHandWaarde(dealerHand) < 17) {
+		            while (game.getHandWaarde(dealerHand) < 17) {   // wannneer de waardes onder 17 blijft krijgt dealer een extra kaart
 		                dealerHand.add(game.dealKaart());
 		            }
 

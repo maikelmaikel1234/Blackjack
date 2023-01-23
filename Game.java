@@ -8,18 +8,18 @@ class Game {
 
     public Game() {
         // deck creeren van kaarten
-        deck = new ArrayList<Integer>();
-        for (int i = 1; i <= 13; i++) {
+        deck = new ArrayList<Integer>(); 			// Hier wordt een array list gemaakt met intergers om een deck te creeren
+        for (int i = 1; i <= 13; i++) {				// een loop wordt hier gemaakt om kaarten tot bepaalde getal te maken
             for (int j = 0; j < 4; j++) {
                 deck.add(i);
             }
         }
-        Collections.shuffle(deck);
+        Collections.shuffle(deck);					// HIer wordt deck geshuffled
     }
 
     public int dealKaart() {
         
-        if (deck.size() > 0) {
+        if (deck.size() > 0) {						// Hier wordt de deck de deelt
             return deck.remove(0);
         } else {
             return -1;
@@ -30,13 +30,13 @@ class Game {
         // Totale waarde van handen
         int waarde = 0;
         int numAces = 0;
-        for (int i : hand) {
+        for (int i : hand) {						// Hier wordt de waarde bepaald
             waarde += Math.min(i, 10);
             if (i == 1) {
                 numAces++;
             }
         }
-        while (waarde < 12 && numAces > 0) {
+        while (waarde < 12 && numAces > 0) {		// hier worden de waardes bepaald
             waarde += 10;
             numAces--;
         }
@@ -45,14 +45,14 @@ class Game {
 
     public boolean instandBlackjack(ArrayList<Integer> hand) {
         // Waarde wordt gechecked of iemand direct 21 heeft
-        return (hand.size() == 2 && getHandWaarde(hand) == 21);
+        return (hand.size() == 2 && getHandWaarde(hand) == 21); 	
     }
 
     public String determineWinner(ArrayList<Integer> playerHand, ArrayList<Integer> dealerHand) {
         // Winner bepalen
         int playerWaarde = getHandWaarde(playerHand);
         int dealerWaarde = getHandWaarde(dealerHand);
-        if (playerWaarde > 21) {
+        if (playerWaarde > 21) {						// winaar bepalen met if en else if statements
             return "Player busts";
         } else if (dealerWaarde > 21) {
             return "Player wins";
