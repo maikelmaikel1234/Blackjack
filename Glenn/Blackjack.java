@@ -26,11 +26,15 @@ public class Blackjack {
 			System.out.println(p.getrokkenKaarten.get(0).kaart + " & " + p.getrokkenKaarten.get(1).kaart);
 		}
 		dealer.eersteKaartDealer(); //Geeft de dealer een eerste kaart
+		enterPrompt();
 		
 		//De main game loop, stopt wanneer in de beurt van de speler hij q invoert.
 		while(doorgaanSpel) {
 			for (Speler p : spelers) { //Geeft elke speler in de ArrayList spelers een beurt mits deze minder dan 21 punten heeft.
-				if(p.haalTotaal() < 21) p.beurtSpeler();
+				if(p.haalTotaal() < 21) {
+					p.beurtSpeler();
+					enterPrompt();
+				}
 			}
 			if(aantalSpelers == aantalPasses) { //Doet de beurt van de Dealer nadat alle spelers hebben gepassed.
 				dealer.beurtDealer();
@@ -118,28 +122,29 @@ public class Blackjack {
 	}
 	
 	static void checkScore() {
+		enterPrompt();
 		for (Speler p : spelers) { //Loop die elke speler af gaat.
 			System.out.println();
 			if (p.haalTotaal() > 21) { 
 				//Voert dit uit als speler meer dan 21 punten heeft.
 				System.out.println("Helaas " + p.krijgNaam() + ", je hebt helaas verloren omdat je meer dan 21 punten hebt.");
-				System.out.println("Je eindscore:  " + p.haalTotaal() + " punten.");
+				System.out.println("Je eindscore: " + p.haalTotaal() + " punten.");
 			} else if (dealer.haalTotaal() > 21) {
 				//Voert dit uit als dealer meer dan 21 punten heeft.
 				System.out.println("Gefeliciteerd " + p.krijgNaam() + "!\nJe hebt gewonnen omdat de dealer meer heeft dan 21 punten.");
-				System.out.println("Je eindscore:  " + p.haalTotaal() + " punten.");
+				System.out.println("Je eindscore: " + p.haalTotaal() + " punten.");
 			} else if (p.haalTotaal() < dealer.haalTotaal()) {
 				//Voert dit uit als speler minder heeft dan dealer.
 				System.out.println("Helaas " + p.krijgNaam() + ", je hebt verloren van de dealer.");
-				System.out.println("Je eindscore:  " + p.haalTotaal() + " punten.");
+				System.out.println("Je eindscore: " + p.haalTotaal() + " punten.");
 			} else if (p.haalTotaal() > dealer.haalTotaal() && p.haalTotaal() < 21) {
 				//Voert dit uit als speler meer heeft dan dealer.
 				System.out.println("Gefeliciteerd " + p.krijgNaam() + ", je hebt gewonnen van de dealer.");
-				System.out.println("Je eindscore:  " + p.haalTotaal() + " punten.");
+				System.out.println("Je eindscore: " + p.haalTotaal() + " punten.");
 			} else if (p.haalTotaal() == dealer.haalTotaal()) {
 				//Voert dit uit als de scores gelijk zijn.
-				System.out.println(p.krijgNaam() + ", je hebt evenveel punten als de dealer.");
-				System.out.println("Je eindscore:  " + p.haalTotaal() + " punten.");
+				System.out.println(p.krijgNaam() + ", je hebt gelijk gespeeld met de dealer.");
+				System.out.println("Je eindscore: " + p.haalTotaal() + " punten.");
 			} else if (p.heeftBlackjack) {
 				//Voert dit uit als de speler Blackjack heeft en de dealer niet.
 				System.out.println("Gefeliciteerd " + p.krijgNaam() + ", je hebt gewonnen met een Blackjack.");
@@ -154,7 +159,8 @@ public class Blackjack {
 	}
 	
 	static void enterPrompt() { //W.I.P., werkt nog niet zoals ik wil.
+		Scanner enter = new Scanner(System.in);
 		System.out.println("\nDruk op enter om door te gaan.");
-		String enter = input.nextLine();
+		enter.nextLine();
 	}
 }
