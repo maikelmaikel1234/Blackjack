@@ -52,7 +52,7 @@ public class Blackjack {
 			try {
 				aantalSpelers = input.nextInt();
 			} catch(InputMismatchException IME) {
-				System.out.println("\nDaar ging iets mis, voer een getal in a.u.b.");
+				System.out.println("\nDaar ging iets mis, voer een heel getal in a.u.b.");
 				input.nextLine();
 			}
 			if(aantalSpelers < 1) {
@@ -86,24 +86,29 @@ public class Blackjack {
 				timerDuratie = input.nextInt();
 				loop = false;
 			} catch(InputMismatchException IME) {
-				System.out.println("\nDaar ging iets mis, voer een getal in a.u.b.");
+				System.out.println("\nDaar ging iets mis, voer een heel getal in a.u.b.");
 				input.nextLine();
 			}
-			System.out.println("\nSpelers hebben " + timerDuratie + " seconde de tijd om te antwoorden, klopt dit? (ja/nee)");
-			String antwoord = input.next();
-			switch(antwoord) {
-			case "j":
-			case "ja":
-				System.out.println();
-				break;
-			case "n":
-			case "nee":
-				System.out.println("\nHoeveel seconde dan?");
+			if(timerDuratie < 5) {
+				System.out.println("\nDat is wel erg weinig tijd, geef ze op z'n minst 5 seconde.");
 				loop = true;
-				break;
-			default:
-				System.out.println("\nOngeldige invoer");
-				loop = true;
+			} else {
+				System.out.println("\nSpelers hebben " + timerDuratie + " seconde de tijd om te antwoorden, klopt dit? (ja/nee)");
+				String antwoord = input.next();
+				switch(antwoord) {
+				case "j":
+				case "ja":
+					System.out.println();
+					break;
+				case "n":
+				case "nee":
+					System.out.println("\nHoeveel seconde dan?");
+					loop = true;
+					break;
+				default:
+					System.out.println("\nOngeldige invoer");
+					loop = true;
+				}
 			}
 		}
 	}
@@ -117,24 +122,24 @@ public class Blackjack {
 			System.out.println();
 			if (p.haalTotaal() > 21) { 
 				//Voert dit uit als speler meer dan 21 punten heeft.
-				System.out.println("Helaas " + p.krijgNaam() + ", je hebt helaas verloren omdat hebt meer dan 21 punten hebt.");
-				System.out.println("Je had " + p.haalTotaal() + " punten.");
+				System.out.println("Helaas " + p.krijgNaam() + ", je hebt helaas verloren omdat je meer dan 21 punten hebt.");
+				System.out.println("Je eindscore:  " + p.haalTotaal() + " punten.");
 			} else if (dealer.haalTotaal() > 21) {
 				//Voert dit uit als dealer meer dan 21 punten heeft.
 				System.out.println("Gefeliciteerd " + p.krijgNaam() + "!\nJe hebt gewonnen omdat de dealer meer heeft dan 21 punten.");
-				System.out.println("Je had " + p.haalTotaal() + " punten.");
+				System.out.println("Je eindscore:  " + p.haalTotaal() + " punten.");
 			} else if (p.haalTotaal() < dealer.haalTotaal()) {
 				//Voert dit uit als speler minder heeft dan dealer.
 				System.out.println("Helaas " + p.krijgNaam() + ", je hebt verloren van de dealer.");
-				System.out.println("Je had " + p.haalTotaal() + " punten.");
+				System.out.println("Je eindscore:  " + p.haalTotaal() + " punten.");
 			} else if (p.haalTotaal() > dealer.haalTotaal() && p.haalTotaal() < 21) {
 				//Voert dit uit als speler meer heeft dan dealer.
 				System.out.println("Gefeliciteerd " + p.krijgNaam() + ", je hebt gewonnen van de dealer.");
-				System.out.println("Je had " + p.haalTotaal() + " punten.");
+				System.out.println("Je eindscore:  " + p.haalTotaal() + " punten.");
 			} else if (p.haalTotaal() == dealer.haalTotaal()) {
 				//Voert dit uit als de scores gelijk zijn.
 				System.out.println(p.krijgNaam() + ", je hebt evenveel punten als de dealer.");
-				System.out.println("Jullie hadden " + p.haalTotaal() + " punten.");
+				System.out.println("Je eindscore:  " + p.haalTotaal() + " punten.");
 			} else if (p.heeftBlackjack) {
 				//Voert dit uit als de speler Blackjack heeft en de dealer niet.
 				System.out.println("Gefeliciteerd " + p.krijgNaam() + ", je hebt gewonnen met een Blackjack.");
@@ -143,8 +148,13 @@ public class Blackjack {
 	}
 	
 	static void beeindigSpel() {
-		System.out.println("\nWas leuk met je te spelen!");
+		System.out.println("\nHet was leuk met je/jullie te spelen!");
 		System.out.println("\n----EINDE PROGRAMMA----");
 		System.exit(0);
+	}
+	
+	static void enterPrompt() { //W.I.P., werkt nog niet zoals ik wil.
+		System.out.println("\nDruk op enter om door te gaan.");
+		String enter = input.nextLine();
 	}
 }
