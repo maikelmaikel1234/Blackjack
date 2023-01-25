@@ -45,12 +45,12 @@ public class Blackjack {
 
 	}
 	
-	static void spelerPass() {
+	static void spelerPass() { //Word uitgevoerd na de beurt van een speler, increment de aantalPasses counter.
 		aantalPasses++;
 //		System.out.println("Aantal passes: " + aantalPasses);
 	}
 
-	static void vraagAantalSpelers() {
+	static void vraagAantalSpelers() { //Vraagt hoeveel spelers mee doen aan het spel
 		do {
 			System.out.println("Hoeveel spelers zijn er?");
 			try {
@@ -81,7 +81,7 @@ public class Blackjack {
 		}
 	}
 	
-	static void vraagTimerTijd() {
+	static void vraagTimerTijd() { //Vraagt hoeveel seconde alle spelers moeten krijgen voor hun beurt
 		boolean loop = true;
 		System.out.println("Spelers moeten in hun beurt binnen de tijd antwoord geven.");
 		System.out.println("Binnen hoeveel seconde moeten ze antwoord geven voordat ze af zijn?");
@@ -158,7 +158,7 @@ public class Blackjack {
 		System.exit(0);
 	}
 	
-	static void enterPrompt() { //W.I.P., werkt nog niet zoals ik wil.
+	static void enterPrompt() { //Maakt een nieuwe scanner aan en vraagt om input waar niets mee gebeurd.
 		Scanner enter = new Scanner(System.in);
 		System.out.println("\nDruk op enter om door te gaan.");
 		enter.nextLine();
